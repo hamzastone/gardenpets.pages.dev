@@ -9,18 +9,20 @@ function generate() {
 
   setTimeout(() => {
     document.getElementById('status').innerText = "Garden ready! Verifying...";
+
     setTimeout(() => {
+      // Replace with your real OGAds or CPAgrip link
       window.location.href = "https://your-affiliate-link.com";
     }, 2000);
   }, 2000);
 }
 
 function toggleSelect(el) {
-  const selected = document.querySelectorAll('.item.selected');
-  if (el.classList.contains('selected')) {
-    el.classList.remove('selected');
+  if (el.classList.contains("selected")) {
+    el.classList.remove("selected");
   } else {
+    const selected = document.querySelectorAll(".item.selected");
     if (selected.length >= 3) return;
-    el.classList.add('selected');
+    el.classList.add("selected");
   }
 }
