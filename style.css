@@ -58,8 +58,6 @@ button {
   transition: transform 0.2s;
   cursor: pointer;
   text-align: center;
-  box-sizing: border-box;
-  background-color: transparent;
 }
 
 .item img {
@@ -67,7 +65,6 @@ button {
   height: auto;
   border-radius: 12px;
   background: transparent;
-  display: block;
 }
 
 .item p {
@@ -82,36 +79,23 @@ button {
   background-color: rgba(0, 255, 100, 0.1);
 }
 
-/* Ensure all .item divs are the same size */
-.item {
-  min-height: 190px;
-}
-
-/* Popup Notification */
-.popup {
+/* ✅ Popup style */
+#popup {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  height: auto;
-  z-index: 9999;
+  bottom: 30px;
+  right: 30px;
+  width: 280px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 9999;
 }
-
-.popup img {
+#popup img {
   width: 100%;
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
-
-.popup.show {
+#popup.visible {
   opacity: 1;
-  transform: translateY(0);
-}
-
-.popup.hidden {
-  display: none;
+  pointer-events: auto;
 }
