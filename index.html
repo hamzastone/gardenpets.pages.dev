@@ -2,60 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grow a Garden Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fruit/Pets Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="images/logo.png" alt="Grow a Garden Logo" class="logo" />
+  <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
+  <h1>Fruit/Pets Generator</h1>
+  <input type="text" id="username" placeholder="Enter Username" />
+  <button id="generateBtn">Generate!</button>
+  <p class="limit-text">You can only select up to 3 fruits/pets!</p>
 
-    <h1>Fruit/Pets Generator</h1>
-    <div class="input-group">
-      <input id="username" placeholder="Enter Username" />
-      <button onclick="generate()">Generate!</button>
-    </div>
+  <h2>Pets:</h2>
+  <div class="grid" id="pets">
+    <img src="dragonfly.png" data-name="dragonfly" />
+    <img src="t-rex.png" data-name="t-rex" />
+    <img src="mimic-octopus.png" data-name="mimic-octopus" />
+    <img src="spinosaurus.png" data-name="spinosaurus" />
+    <img src="brontosaurus.png" data-name="brontosaurus" />
+    <img src="ankylosaurus.png" data-name="ankylosaurus" />
+    <img src="disco-bee.png" data-name="disco-bee" />
+    <img src="zombie-chicken.png" data-name="zombie-chicken" />
+    <img src="queen-bee.png" data-name="queen-bee" />
+    <img src="kitsune.png" data-name="kitsune" />
+    <img src="new-kitsune.png" data-name="new-kitsune" />
+    <img src="kappa.png" data-name="kappa" />
+    <img src="raccoon.png" data-name="raccoon" />
+    <img src="red-fox.png" data-name="red-fox" />
+    <img src="fennec-fox.png" data-name="fennec-fox" />
+    <img src="butterfly.png" data-name="butterfly" />
+  </div>
 
-    <p class="limit-note">You can only select up to 3 fruits/pets!</p>
-
-    <h2>Pets:</h2>
-    <div class="grid" id="pets">
-      <div class="item" onclick="selectItem(this)"><img src="images/kitsune.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/new-kitsune.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/raccoon.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/spinosaurus.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/kappa.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/disco-bee.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/ankylosaurus.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/t-rex.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/brontosaurus.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/mimic-octopus.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/fennec-fox.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/butterfly.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/dragonfly.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/zombie-chicken.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/queen-bee.png.png"></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/red-fox.png.png"></div>
-    </div>
-
-    <h2>Fruits:</h2>
-    <div class="grid" id="fruits">
-      <div class="item" onclick="selectItem(this)"><img src="images/candy-blossom.png.png"><div>Candy Blossom</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/guanabana.png.png"><div>Guanabana Seed</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/travelers-fruit.png.png"><div>Traveler’s Fruit</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/sugar-apple.png.png"><div>Sugar Apple</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/elephant-ears.png.png"><div>Elephant Ears</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/feijoa.png.png"><div>Feijoa</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/loquat.png.png"><div>Loquat</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/prickly-pear.png.png"><div>Prickly Pear</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/bell-pepper.png.png"><div>Bell Pepper</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/ember-lily.png.png"><div>Ember Lily</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/beanstalk.png.png"><div>Beanstalk</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/cacao.png.png"><div>Cacao</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/pepper.png.png"><div>Pepper</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/mushroom.png.png"><div>Mushroom</div></div>
-      <div class="item" onclick="selectItem(this)"><img src="images/grape.png.png"><div>Grape</div></div>
-    </div>
+  <h2>Fruits:</h2>
+  <div class="grid" id="fruits">
+    <img src="candy-blossom.png" data-name="candy-blossom" />
+    <img src="guanabana.png" data-name="guanabana" />
+    <img src="travelers-fruit.png" data-name="travelers-fruit" />
+    <img src="sugar-apple.png" data-name="sugar-apple" />
+    <img src="elephant-ears.png" data-name="elephant-ears" />
+    <img src="feijoa.png" data-name="feijoa" />
+    <img src="loquat.png" data-name="loquat" />
+    <img src="prickly-pear.png" data-name="prickly-pear" />
+    <img src="bell-pepper.png" data-name="bell-pepper" />
+    <img src="ember-lily.png" data-name="ember-lily" />
+    <img src="beanstalk.png" data-name="beanstalk" />
+    <img src="cacao.png" data-name="cacao" />
+    <img src="pepper.png" data-name="pepper" />
+    <img src="mushroom.png" data-name="mushroom" />
+    <img src="grape.png" data-name="grape" />
   </div>
 
   <script src="script.js"></script>
