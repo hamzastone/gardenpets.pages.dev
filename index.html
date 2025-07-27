@@ -1,36 +1,17 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🌱 Grow a Garden Gift Generator</title>
+  <title>Grow a Garden Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>🌿 Grow a Garden Generator</h1>
-    <p>Enter your Roblox username to claim your gift!</p>
+    <h1>🌱 Grow a Garden Generator</h1>
     <input id="username" placeholder="Enter your username" />
-    <br><br>
-
-    <!-- Replace this link when OGAds approves you -->
-    <a id="offerButton" href="https://example.com" target="_blank">
-      <button>🎁 Claim Your $100 Gift Now</button>
-    </a>
-
+    <button onclick="generate()">Generate</button>
     <p id="status"></p>
   </div>
+  <script src="script.js"></script>
 </body>
 </html>
-
-<div class="image-grid">
-  <div class="selectable" onclick="toggleSelect(this)">
-    <img src="images/pet1.png" alt="Pet 1">
-  </div>
-  <div class="selectable" onclick="toggleSelect(this)">
-    <img src="images/pet2.png" alt="Pet 2">
-  </div>
-  <div class="selectable" onclick="toggleSelect(this)">
-    <img src="images/pet3.png" alt="Pet 3">
-  </div>
-  <!-- Add more as needed -->
-</div>
