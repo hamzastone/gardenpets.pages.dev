@@ -102,3 +102,43 @@ function startPopupCycle() {
     showPopup(popupImages[popupIndex]);
   }, 26000); // 6s visible + 20s delay
 }
+const popupImages = ["popup1.png", "popup2.png"]; // Replace with your real image names
+let popupIndex = 0;
+let popupElement;
+
+function showPopup(imageSrc) {
+  if (!popupElement) {
+    popupElement = document.createElement("img");
+    popupElement.className = "popup";
+    document.body.appendChild(popupElement);
+  }
+
+  popupElement.src = imageSrc;
+  popupElement.style.display = "block";
+  popupElement.style.opacity = "0";
+
+  // Fade in
+  setTimeout(() => {
+    popupElement.style.opacity = "1";
+  }, 50);
+
+  // Fade out after 6 seconds
+  setTimeout(() => {
+    popupElement.style.opacity = "0";
+  }, 6050);
+
+  // Hide completely after 6.6 seconds
+  setTimeout(() => {
+    popupElement.style.display = "none";
+  }, 6600);
+}
+
+function cyclePopups() {
+  showPopup(popupImages[popupIndex]);
+  popupIndex = (popupIndex + 1) % popupImages.length;
+  setTimeout(cyclePopups, 26000); // Wait 6s display + 20s idle
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  cyclePopups(); // Start the popup cycle when the page loads
+});
