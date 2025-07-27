@@ -11,7 +11,9 @@ const fruits = [
 ];
 
 function formatName(name) {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function createImages(containerId, items) {
@@ -67,28 +69,47 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = url;
   });
 
-  // Bouncing fruit logic
-  const fruit = document.getElementById("bouncing-fruit");
-  let x = Math.random() * window.innerWidth;
-  let y = Math.random() * window.innerHeight;
-  let dx = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1);
-  let dy = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1);
+  // Add animated fruits on page load
+  createBouncingFruit("fruit.png", 100, 150, 1.1, 1.2);  // Fruit 1
+  createBouncingFruit("fruit2.png", 500, 200, 1.3, 1.1); // Fruit 2
+});
 
-  function animate() {
+// Bouncing animation function
+function createBouncingFruit(imageSrc, startX, startY, speedX, speedY, zIndex = -1) {
+  const fruit = document.createElement("img");
+  fruit.src = imageSrc;
+  fruit.alt = "Bouncing Fruit";
+  fruit.style.position = "fixed";
+  fruit.style.left = `${startX}px`;
+  fruit.style.top = `${startY}px`;
+  fruit.style.width = "70px";
+  fruit.style.pointerEvents = "none";
+  fruit.style.zIndex = zIndex;
+  fruit.style.opacity = 0.8;
+  document.body.appendChild(fruit);
+
+  let x = startX;
+  let y = startY;
+  let dx = speedX;
+  let dy = speedY;
+
+  function move() {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
     const fruitWidth = fruit.offsetWidth;
     const fruitHeight = fruit.offsetHeight;
 
     x += dx;
     y += dy;
 
-    if (x <= 0 || x + fruitWidth >= window.innerWidth) dx *= -1;
-    if (y <= 0 || y + fruitHeight >= window.innerHeight) dy *= -1;
+    if (x + fruitWidth > screenWidth || x < 0) dx = -dx;
+    if (y + fruitHeight > screenHeight || y < 0) dy = -dy;
 
-    fruit.style.left = x + "px";
-    fruit.style.top = y + "px";
+    fruit.style.left = `${x}px`;
+    fruit.style.top = `${y}px`;
 
-    requestAnimationFrame(animate);
+    requestAnimationFrame(move);
   }
 
-  animate();
-});
+  move();
+}
