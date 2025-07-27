@@ -10,7 +10,6 @@ const fruits = [
   "ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
 ];
 
-// Capitalize name helper
 function formatName(name) {
   return name
     .replace(/-/g, ' ')
@@ -70,26 +69,45 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = url;
   });
 
-  // Show popup 2 seconds after page load
-  setTimeout(showPopup, 2000);
+  // START POPUP CYCLE
+  startPopupCycle();
 });
 
-function showPopup() {
-  const popup = document.getElementById("popup-notification");
-  popup.classList.remove("hidden");
 
-  // Trigger fade-in
-  setTimeout(() => {
-    popup.classList.add("show");
-  }, 100);
+// === POPUP IMAGE SEQUENCE ===
+const popupImages = ["popup-clean.png", "popup2.png"]; // your popup image files
+let popupIndex = 0;
+
+function createPopupContainer() {
+  const popup = document.createElement("img");
+  popup.id = "popup";
+  popup.style.position = "fixed";
+  popup.style.bottom = "20px";
+  popup.style.right = "20px";
+  popup.style.width = "220px";
+  popup.style.zIndex = "9999";
+  popup.style.opacity = "0";
+  popup.style.transition = "opacity 1s ease-in-out";
+  document.body.appendChild(popup);
+  return popup;
+}
+
+function showPopup(imageSrc) {
+  const popup = document.getElementById("popup") || createPopupContainer();
+  popup.src = imageSrc;
+  popup.style.opacity = "1";
 
   // Fade out after 6 seconds
   setTimeout(() => {
-    popup.classList.remove("show");
-
-    // Fully hide after fade-out
-    setTimeout(() => {
-      popup.classList.add("hidden");
-    }, 500);
+    popup.style.opacity = "0";
   }, 6000);
+}
+
+function startPopupCycle() {
+  showPopup(popupImages[popupIndex]);
+
+  setInterval(() => {
+    popupIndex = (popupIndex + 1) % popupImages.length;
+    showPopup(popupImages[popupIndex]);
+  }, 16000); // 6s visible + 10s wait = 16s cycle
 }
