@@ -6,12 +6,36 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🌱 Grow a Garden Generator</h1>
-    <input id="username" placeholder="Enter your username" />
-    <button onclick="generate()">Generate</button>
-    <p id="status"></p>
+
+  <div class="logo-container">
+    <img src="grow-logo.png" alt="Grow a Garden Logo" class="logo">
+    <h2>Fruit/Pets Generator</h2>
+    <input id="username" placeholder="Enter Username">
+    <button onclick="generate()">Generate!</button>
   </div>
+
+  <p class="note">You can only select up to 3 fruits/pets!</p>
+
+  <div class="section">
+    <h3>Pets:</h3>
+    <div class="grid" id="pet-container">
+      <img src="kitsune.png" alt="Kitsune" class="item" onclick="toggleSelection(this)">
+      <img src="racoon.png" alt="Racoon" class="item" onclick="toggleSelection(this)">
+      <!-- Add more pet images -->
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Fruits:</h3>
+    <div class="grid" id="fruit-container">
+      <img src="candyblossom.png" alt="Candy Blossom" class="item" onclick="toggleSelection(this)">
+      <img src="sugarapple.png" alt="Sugar Apple" class="item" onclick="toggleSelection(this)">
+      <!-- Add more fruit images -->
+    </div>
+  </div>
+
+  <p id="status"></p>
+
   <script src="script.js"></script>
 </body>
 </html>
