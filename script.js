@@ -68,29 +68,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = `https://ogads.com/?username=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
     window.location.href = url;
   });
-
-  // 🟢 Bouncing fruit animation
-  const fruit = document.getElementById("bouncing-fruit");
-  let x = 0;
-  let y = 0;
-  let dx = Math.random() < 0.5 ? 0.8 : -0.8;
-  let dy = Math.random() < 0.5 ? 0.8 : -0.8;
-
-  function moveFruit() {
-    const maxX = window.innerWidth - fruit.offsetWidth;
-    const maxY = window.innerHeight - fruit.offsetHeight;
-
-    x += dx;
-    y += dy;
-
-    if (x <= 0 || x >= maxX) dx *= -1;
-    if (y <= 0 || y >= maxY) dy *= -1;
-
-    fruit.style.left = x + "px";
-    fruit.style.top = y + "px";
-
-    requestAnimationFrame(moveFruit);
-  }
-
-  moveFruit();
 });
+
+
+// 🟢 Bouncing fruit animation (Improved)
+const fruit = document.getElementById("bouncing-fruit");
+let x = 0;
+let y = 0;
+
+function randomSpeed() {
+  return (Math.random() * 1.3 + 1.2) * (Math.random() < 0.5 ? 1 : -1);
+}
+
+let dx = randomSpeed();
+let dy = randomSpeed();
+
+function moveFruit() {
+  const maxX = window.innerWidth - fruit.offsetWidth;
+  const maxY = window.innerHeight - fruit.offsetHeight;
+
+  x += dx;
+  y += dy;
+
+  if (x <= 0 || x >= maxX) dx *= -1;
+  if (y <= 0 || y >= maxY) dy *= -1;
+
+  fruit.style.left = x + "px";
+  fruit.style.top = y + "px";
+
+  requestAnimationFrame(moveFruit);
+}
+
+moveFruit();
