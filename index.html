@@ -1,65 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Grow a Garden Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background"></div>
   <div class="container">
-    <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-
+    <img src="images/logo.png" alt="Grow a Garden Logo" class="logo">
     <h2>Fruit/Pets Generator</h2>
     <div class="input-group">
-      <input type="text" id="username" placeholder="Enter Username" />
+      <input id="username" placeholder="Enter Username" />
       <button onclick="generate()">Generate!</button>
     </div>
     <p class="warning">You can only select up to 3 fruits/pets!</p>
-
-    <div class="section">
-      <h3>Pets:</h3>
-      <div class="item-grid" id="pets">
-        <div class="item" onclick="toggleSelect(this)"><img src="kitsune.png" /><p>Kitsune</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="new-kitsune.png" /><p>New Kitsune</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="racoon.png" /><p>Racoon Pet</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="spinosaurus.png" /><p>Spinosaurus</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="kappa.png" /><p>Kappa</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="disco-bee.png" /><p>Disco Bee</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="ankylosaurus.png" /><p>Ankylosaurus</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="trex.png" /><p>T-Rex Dinosaur</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="brontosaurus.png" /><p>Brontosaurus</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="mimic-octopus.png" /><p>Mimic Octopus</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="fennec-fox.png" /><p>Fennec Fox</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="butterfly.png" /><p>Butterfly Pet</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="dragonfly.png" /><p>Dragonfly Pet</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="zombie-chicken.png" /><p>Zombie Chicken</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="queen-bee.png" /><p>Queen Bee</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="red-fox.png" /><p>Red Fox</p></div>
+    
+    <h3>Pets:</h3>
+    <div class="grid">
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/kitsune.png"><p>Kitsune</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/new-kitsune.png"><p>New Kitsune</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/racoon.png"><p>Racoon Pet</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/spino.png"><p>Spinosaurus</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/kappa.png"><p>Kappa</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/disco-bee.png"><p>Disco Bee</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/ankylosaurus.png"><p>Ankylosaurus</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/trex.png"><p>T-Rex Dinosaur</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/bronto.png"><p>Brontosaurus</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/mimic.png"><p>Mimic Octopus</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/fennec.png"><p>Fennec Fox</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/butterfly.png"><p>Butterfly Pet</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/dragonfly.png"><p>Dragonfly Pet</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/zombie.png"><p>Zombie Chicken</p>
       </div>
     </div>
 
-    <div class="section">
-      <h3>Fruits:</h3>
-      <div class="item-grid" id="fruits">
-        <div class="item" onclick="toggleSelect(this)"><img src="candy-blossom.png" /><p>Candy Blossom</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="guanabana.png" /><p>Guanabana Seed</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="travelers-fruit.png" /><p>Traveler’s Fruit</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="sugar-apple.png" /><p>Sugar Apple</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="elephant-ears.png" /><p>Elephant Ears</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="feijoa.png" /><p>Feijoa</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="loquat.png" /><p>Loquat</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="prickly-pear.png" /><p>Prickly Pear</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="bell-pepper.png" /><p>Bell Pepper</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="ember-lily.png" /><p>Ember Lily</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="beanstalk.png" /><p>Beanstalk</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="cacao.png" /><p>Cacao</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="pepper.png" /><p>Pepper</p></div>
-        <div class="item" onclick="toggleSelect(this)"><img src="mushroom.png" /><p>Mushroom</p></div>
+    <h3>Fruits:</h3>
+    <div class="grid">
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/candy.png"><p>Candy Blossom</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/guanabana.png"><p>Guanabana Seed</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/travelers.png"><p>Traveler's Fruit</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/sugar.png"><p>Sugar Apple</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/elephant.png"><p>Elephant Ears</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/feijoa.png"><p>Feijoa</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/loquat.png"><p>Loquat</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/prickly.png"><p>Prickly Pear</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/bell.png"><p>Bell Pepper</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/ember.png"><p>Ember Lily</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/beanstalk.png"><p>Beanstalk</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/cacao.png"><p>Cacao</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/pepper.png"><p>Pepper</p>
+      </div>
+      <div class="item" onclick="toggleSelect(this)">
+        <img src="images/mushroom.png"><p>Mushroom</p>
       </div>
     </div>
+
     <p id="status"></p>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
