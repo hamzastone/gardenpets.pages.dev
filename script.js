@@ -11,18 +11,20 @@ function generate() {
     document.getElementById('status').innerText = "Garden ready! Verifying...";
 
     setTimeout(() => {
-      // Replace with your OGAds/CPA link
       window.location.href = "https://your-affiliate-link.com";
     }, 2000);
+
   }, 2000);
 }
 
-function toggleSelect(el) {
-  if (el.classList.contains("selected")) {
-    el.classList.remove("selected");
+let selectedCount = 0;
+function selectItem(element) {
+  if (element.classList.contains('selected')) {
+    element.classList.remove('selected');
+    selectedCount--;
   } else {
-    const selected = document.querySelectorAll(".item.selected");
-    if (selected.length >= 3) return;
-    el.classList.add("selected");
+    if (selectedCount >= 3) return;
+    element.classList.add('selected');
+    selectedCount++;
   }
 }
