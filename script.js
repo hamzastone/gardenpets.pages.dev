@@ -69,30 +69,28 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = url;
   });
 
-  // Bouncing Fruit Script
+  // 🟢 Bouncing fruit animation
   const fruit = document.getElementById("bouncing-fruit");
-  let x = 50, y = 50;
-  let dx = 2, dy = 2;
+  let x = 0;
+  let y = 0;
+  let dx = Math.random() < 0.5 ? 0.8 : -0.8;
+  let dy = Math.random() < 0.5 ? 0.8 : -0.8;
 
-  function animateFruit() {
+  function moveFruit() {
     const maxX = window.innerWidth - fruit.offsetWidth;
     const maxY = window.innerHeight - fruit.offsetHeight;
 
     x += dx;
     y += dy;
 
-    if (x <= 0 || x >= maxX) dx = -dx;
-    if (y <= 0 || y >= maxY) dy = -dy;
+    if (x <= 0 || x >= maxX) dx *= -1;
+    if (y <= 0 || y >= maxY) dy *= -1;
 
-    fruit.style.left = `${x}px`;
-    fruit.style.top = `${y}px`;
+    fruit.style.left = x + "px";
+    fruit.style.top = y + "px";
 
-    requestAnimationFrame(animateFruit);
+    requestAnimationFrame(moveFruit);
   }
 
-  // Start at random angle
-  dx = Math.random() < 0.5 ? 2 : -2;
-  dy = Math.random() < 0.5 ? 2 : -2;
-
-  animateFruit();
+  moveFruit();
 });
