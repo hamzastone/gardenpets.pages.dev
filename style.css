@@ -78,37 +78,3 @@ button {
   transform: scale(1.05);
   background-color: rgba(0, 255, 100, 0.1);
 }
-
-/* ✅ Popup style */
-#popup {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 280px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
-  z-index: 9999;
-}
-#popup img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-#popup.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-.popup {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 160px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.6s ease;
-  opacity: 0;
-  display: none;
-  z-index: 9999;
-}
