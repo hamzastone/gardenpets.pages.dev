@@ -4,6 +4,8 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .logo {
@@ -79,13 +81,19 @@ button {
   background-color: rgba(0, 255, 100, 0.1);
 }
 
-/* Bouncing Fruit Image */
+/* 🟢 Bouncing Fruit */
 #bouncing-fruit {
   position: fixed;
   width: 90px;
   height: auto;
-  bottom: 50px;
-  right: 50px;
-  z-index: 999;
+  z-index: -9999; /* sends it behind everything */
+  top: 0;
+  left: 0;
   pointer-events: none;
+}
+
+/* Optional: Make sure everything else is above */
+body, .grid, .logo, h1, h2, input, button, .item {
+  position: relative;
+  z-index: 1;
 }
