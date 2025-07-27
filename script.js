@@ -10,7 +10,6 @@ const fruits = [
   "ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
 ];
 
-// Capitalize name helper
 function formatName(name) {
   return name
     .replace(/-/g, ' ')
