@@ -10,6 +10,7 @@ const fruits = [
   "ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
 ];
 
+// Capitalize name helper
 function formatName(name) {
   return name
     .replace(/-/g, ' ')
@@ -68,4 +69,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = `https://ogads.com/?username=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
     window.location.href = url;
   });
+
+  // Show popup 2 seconds after page load
+  setTimeout(showPopup, 2000);
 });
+
+function showPopup() {
+  const popup = document.getElementById("popup-notification");
+  popup.classList.remove("hidden");
+
+  // Trigger fade-in
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 100);
+
+  // Fade out after 6 seconds
+  setTimeout(() => {
+    popup.classList.remove("show");
+
+    // Fully hide after fade-out
+    setTimeout(() => {
+      popup.classList.add("hidden");
+    }, 500);
+  }, 6000);
+}
