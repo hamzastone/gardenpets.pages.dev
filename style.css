@@ -78,3 +78,14 @@ button {
   transform: scale(1.05);
   background-color: rgba(0, 255, 100, 0.1);
 }
+
+/* Bouncing Fruit Image */
+#bouncing-fruit {
+  position: fixed;
+  width: 90px;
+  height: auto;
+  bottom: 50px;
+  right: 50px;
+  z-index: 999;
+  pointer-events: none;
+}
