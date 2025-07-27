@@ -4,8 +4,6 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  position: relative;
 }
 
 .logo {
@@ -13,14 +11,10 @@ body {
   margin: 30px auto 10px auto;
   width: 260px;
   height: auto;
-  position: relative;
-  z-index: 2;
 }
 
 h1 {
   margin-bottom: 10px;
-  position: relative;
-  z-index: 2;
 }
 
 input[type="text"] {
@@ -30,8 +24,6 @@ input[type="text"] {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  position: relative;
-  z-index: 2;
 }
 
 button {
@@ -43,16 +35,12 @@ button {
   border-radius: 6px;
   cursor: pointer;
   margin-left: 10px;
-  position: relative;
-  z-index: 2;
 }
 
 .limit-text {
   color: red;
   font-size: 0.9em;
   margin: 10px 0;
-  position: relative;
-  z-index: 2;
 }
 
 .grid {
@@ -61,8 +49,6 @@ button {
   justify-content: center;
   gap: 16px;
   padding: 20px;
-  position: relative;
-  z-index: 2;
 }
 
 .item {
@@ -91,15 +77,4 @@ button {
   border: 3px solid #00cc66;
   transform: scale(1.05);
   background-color: rgba(0, 255, 100, 0.1);
-}
-
-/* Bouncing image styling */
-#bouncing-fruit {
-  position: absolute;
-  width: 100px;
-  height: auto;
-  top: 0;
-  left: 0;
-  z-index: 0; /* Behind everything */
-  pointer-events: none;
 }
