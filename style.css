@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Grow a Garden Generator</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h1>🌱 Grow a Garden Generator</h1>
-    <input id="username" placeholder="Enter your username" />
-    <button onclick="generate()">Generate</button>
-    <p id="status"></p>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+body {
+  font-family: sans-serif;
+  background: linear-gradient(to bottom, #b2f0c7, #e0ffe0);
+  text-align: center;
+  padding-top: 100px;
+}
+input {
+  padding: 10px;
+  width: 60%;
+}
+button {
+  padding: 10px 20px;
+  background-color: #34c759;
+  color: white;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
