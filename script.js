@@ -11,7 +11,7 @@ function generate() {
     document.getElementById('status').innerText = "Garden ready! Verifying...";
 
     setTimeout(() => {
-      // Replace with your real OGAds or CPAgrip link
+      // Replace with your OGAds/CPA link
       window.location.href = "https://your-affiliate-link.com";
     }, 2000);
   }, 2000);
