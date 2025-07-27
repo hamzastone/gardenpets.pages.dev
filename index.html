@@ -2,26 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fruit/Pets Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: linear-gradient(to bottom, #a3e4f7, #b8f0dd);
+      font-family: Arial, sans-serif;
+    }
+
+    #bouncingFruit, #bouncingFruit2 {
+      position: fixed;
+      width: 80px;
+      height: auto;
+      z-index: -1; /* Push it behind everything */
+      pointer-events: none;
+    }
+
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  </style>
 </head>
 <body>
-  <!-- Bouncing fruit image -->
-  <img src="fruit.png" id="bouncing-fruit" alt="Bouncing Fruit" />
+  <img src="fruit.png" id="bouncingFruit" alt="Fruit" />
+  <img src="fruit2.png" id="bouncingFruit2" alt="Fruit 2" />
 
-  <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-  <h1>Fruit/Pets Generator</h1>
-  <input type="text" id="username" placeholder="Enter Username" />
-  <button id="generateBtn">Generate!</button>
-  <p class="limit-text">You can only select up to 3 fruits/pets!</p>
+  <div class="container">
+    <img src="logo.png" alt="Logo" style="width: 300px;" />
+    <h1>Fruit/Pets Generator</h1>
+    <input type="text" placeholder="Enter Username" />
+    <button>Generate!</button>
+    <p style="color:red;">You can only select up to 3 fruits/pets!</p>
 
-  <h2>Pets:</h2>
-  <div class="grid" id="pets-container"></div>
+    <!-- Add your pets/fruits layout below like before -->
+    <h3>Pets:</h3>
+    <!-- Your pet images and labels -->
+    <h3>Fruits:</h3>
+    <!-- Your fruit images and labels -->
+  </div>
 
-  <h2>Fruits:</h2>
-  <div class="grid" id="fruits-container"></div>
+  <script>
+    // Helper function to make any fruit bounce
+    function bounceFruit(fruitId, startX, startY, speed) {
+      const fruit = document.getElementById(fruitId);
+      let x = startX;
+      let y = startY;
+      let dx = speed * (Math.random() < 0.5 ? -1 : 1);
+      let dy = speed * (Math.random() < 0.5 ? -1 : 1);
 
-  <script src="script.js"></script>
+      function animate() {
+        const maxX = window.innerWidth - fruit.offsetWidth;
+        const maxY = window.innerHeight - fruit.offsetHeight;
+
+        x += dx;
+        y += dy;
+
+        if (x <= 0 || x >= maxX) dx *= -1;
+        if (y <= 0 || y >= maxY) dy *= -1;
+
+        fruit.style.left = x + 'px';
+        fruit.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    // Call both fruits with different starting points & speeds
+    window.onload = () => {
+      bounceFruit("bouncingFruit", 100, 200, 1.2);  // Grape
+      bounceFruit("bouncingFruit2", 500, 100, 1.4); // Mango
+    };
+  </script>
 </body>
 </html>
