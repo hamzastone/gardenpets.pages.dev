@@ -1,42 +1,17 @@
-.top-center {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.logo {
-  width: 200px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-h2 {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  color: #000;
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-input#username {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  width: 250px;
-}
-
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px #2d7a34;
-}
-
-button:hover {
-  background-color: #45a049;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grow a Garden Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌱 Grow a Garden Generator</h1>
+    <input id="username" placeholder="Enter your username" />
+    <button onclick="generate()">Generate</button>
+    <p id="status"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
