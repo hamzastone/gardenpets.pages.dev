@@ -68,4 +68,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = `https://ogads.com/?username=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
     window.location.href = url;
   });
+
+  // Bouncing Fruit Script
+  const fruit = document.getElementById("bouncing-fruit");
+  let x = 50, y = 50;
+  let dx = 2, dy = 2;
+
+  function animateFruit() {
+    const maxX = window.innerWidth - fruit.offsetWidth;
+    const maxY = window.innerHeight - fruit.offsetHeight;
+
+    x += dx;
+    y += dy;
+
+    if (x <= 0 || x >= maxX) dx = -dx;
+    if (y <= 0 || y >= maxY) dy = -dy;
+
+    fruit.style.left = `${x}px`;
+    fruit.style.top = `${y}px`;
+
+    requestAnimationFrame(animateFruit);
+  }
+
+  // Start at random angle
+  dx = Math.random() < 0.5 ? 2 : -2;
+  dy = Math.random() < 0.5 ? 2 : -2;
+
+  animateFruit();
 });
