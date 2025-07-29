@@ -3,67 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Generating Items...</title>
+  <title>Generating...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="loading-page">
+<body>
   <div class="loading-box">
-    <img src="logo.png" alt="Logo" class="popup-logo" />
-    <p id="status" class="status-text"></p>
+    <img src="logo.png" alt="Grow a Garden Logo" class="logo-small" />
+    <p id="loadingText" class="loading-text"></p>
     <div class="dots">
-      <span class="dot active"></span>
+      <span class="dot done"></span>
+      <span class="dot done"></span>
+      <span class="dot done"></span>
       <span class="dot"></span>
       <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+    </div>
+    <button id="verifyBtn" class="hidden" onclick="showCPAModal()">Verify</button>
+  </div>
+
+  <!-- Fake CPA Modal -->
+  <div class="modal" id="cpaModal">
+    <div class="modal-content">
+      <img src="logo.png" alt="Grow a Garden" class="modal-logo" />
+      <h2>🎁 LAST STEP !</h2>
+      <p>Complete a simple task below and your pet will be sent to your account. Don’t worry, it’s free!</p>
+      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Enter for a Chance to win a $50 gift card for Roblox!</a>
+      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Don’t miss out! $500 on the line for Walmart, enter NOW!</a>
+      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Enter your details to Win a prepaid Visa Card!</a>
+      <div class="loader-circle"></div>
     </div>
   </div>
 
   <script>
     const steps = [
       "Connecting to server...",
-      "Successfully connected!",
+      "Successfully connected.",
       "Finding username...",
-      "Username found!",
+      { text: "Username found!", class: "green" },
       "Generating items...",
-      "Starting transfer...",
-      "Verifying...",
-      "Human verification required!"
+      { text: "Starting transfer...", class: "green" },
+      "Verifying human activity...",
+      { text: "Human Verification Required.", class: "red" }
     ];
 
+    const loadingText = document.getElementById("loadingText");
+    const verifyBtn = document.getElementById("verifyBtn");
+
     let index = 0;
-    const statusEl = document.getElementById("status");
-    const dots = document.querySelectorAll(".dot");
 
-    function typeText(text, callback) {
-      let i = 0;
-      statusEl.textContent = "";
-      const interval = setInterval(() => {
-        statusEl.textContent += text.charAt(i);
-        i++;
-        if (i === text.length) {
-          clearInterval(interval);
-          setTimeout(callback, 800);
-        }
-      }, 50);
-    }
-
-    function showNextStep() {
-      if (index >= steps.length) {
-        window.location.href = "https://www.cpagrip.com/show.php?l=0&u=YOURID&id=YOUROFFERID"; // replace this
-        return;
+    function typeMessage(message, callback) {
+      loadingText.className = "loading-text";
+      if (typeof message === "object") {
+        loadingText.classList.add(message.class);
+        message = message.text;
       }
 
-      typeText(steps[index], () => {
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === index % dots.length);
-        });
+      loadingText.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        loadingText.textContent += message.charAt(i);
+        i++;
+        if (i >= message.length) {
+          clearInterval(interval);
+          setTimeout(callback, message.includes("Verifying human activity") ? 4000 : 1000);
+        }
+      }, 40);
+    }
+
+    function showCPAModal() {
+      document.getElementById("cpaModal").style.display = "flex";
+    }
+
+    function nextStep() {
+      if (index >= steps.length) return;
+      typeMessage(steps[index], () => {
+        document.querySelectorAll(".dot")[index]?.classList.add("done");
+        if (steps[index].text?.includes("Human Verification Required.") || steps[index]?.includes("Human Verification Required.")) {
+          verifyBtn.classList.remove("hidden");
+        }
         index++;
-        showNextStep();
+        nextStep();
       });
     }
 
-    showNextStep();
+    window.onload = nextStep;
+
+    // Clear username when user goes back
+    window.addEventListener("pageshow", () => {
+      if (window.performance && window.performance.navigation.type === 2) {
+        sessionStorage.removeItem("username");
+      }
+    });
   </script>
 </body>
 </html>
