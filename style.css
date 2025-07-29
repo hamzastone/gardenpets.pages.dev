@@ -124,31 +124,38 @@ button {
   background: white;
   border-radius: 16px;
   box-shadow: 0 0 10px rgba(0,0,0,0.4);
-  padding: 30px;
-  max-width: 400px;
-  width: 90%;
+  padding: 40px 30px;
+  max-width: 460px;
+  margin: 0 auto;
   position: fixed;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 10;
   text-align: center;
 }
 
 .offer-popup h2 {
-  font-size: 24px;
+  font-size: 28px;
+  margin-top: 10px;
+}
+
+.offer-popup p {
+  font-size: 16px;
+  margin: 10px 0 20px 0;
 }
 
 .offer-button {
   display: block;
   width: 100%;
-  margin: 10px 0;
+  margin: 12px 0;
   background: #00cc66;
   color: white;
   font-weight: bold;
-  padding: 12px;
+  padding: 16px;
+  font-size: 15px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -167,4 +174,21 @@ button {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Zoom animation for verify button */
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.verify-btn.zoom-effect {
+  animation: zoomInOut 1s ease;
 }
