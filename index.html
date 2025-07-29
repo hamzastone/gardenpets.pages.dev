@@ -3,42 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading...</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Fruit/Pets Generator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="loading-page">
-  <div class="loading-box">
-    <img src="logo.png" alt="Grow a Garden" class="logo" />
-    <div class="loading-messages" id="loadingMessages"></div>
-    <p class="verify-warning">Human Verification Required.</p>
-    <div class="dots">
-      <div class="dot green"></div>
-      <div class="dot green"></div>
-      <div class="dot green"></div>
-    </div>
-    <button id="verifyBtn" class="verify-button animated-zoom">Verify</button>
-  </div>
+<body>
+  <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
+  <h1>Fruit/Pets Generator</h1>
+  <input type="text" id="username" placeholder="Enter Username" />
+  <button id="generateBtn">Generate!</button>
+  <p class="limit-text">You can only select up to 3 fruits/pets!</p>
 
-  <!-- Popup Offer Section -->
-  <div class="offer-popup" id="offerPopup" style="display: none;">
-    <img src="logo.png" alt="Logo" class="popup-logo">
-    <h2>🎁 LAST STEP !</h2>
-    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it’s free!</p>
+  <h2>Pets:</h2>
+  <div class="grid" id="pets-container"></div>
 
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=68831" class="offer-btn" target="_blank">
-      Enter for a Chance to win a $50 gift card for Roblox!
-    </a>
-
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70869" class="offer-btn" target="_blank">
-      Don’t miss out! $500 on the line for Walmart, enter NOW!
-    </a>
-
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70866" class="offer-btn" target="_blank">
-      Enter your details to win a prepaid Visa Card!
-    </a>
-
-    <div class="loading-spinner"></div>
-  </div>
+  <h2>Fruits:</h2>
+  <div class="grid" id="fruits-container"></div>
 
   <script src="script.js"></script>
 </body>
