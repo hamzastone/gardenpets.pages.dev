@@ -59,19 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
   createImages("pets-container", pets);
   createImages("fruits-container", fruits);
 
-  document.getElementById("generateBtn").addEventListener("click", () => {
+  const generateBtn = document.getElementById("generateBtn");
+
+  generateBtn.addEventListener("click", () => {
     const username = document.getElementById("username").value.trim();
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    const btn = document.getElementById("generateBtn");
-    btn.textContent = "Generating items...";
-    btn.disabled = true;
+    generateBtn.disabled = true;
+    generateBtn.textContent = "Generating items...";
 
     setTimeout(() => {
       const selection = Array.from(selected).join(",");
-      const url = `https://your-cpagrip-offer-link.com/?user=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
-      window.location.href = url;
-    }, 1500);
+      const cpagripURL = `https://your-cpagrip-link.com/?user=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
+      window.location.href = cpagripURL;
+    }, 2000); // 2 seconds delay
   });
 });
