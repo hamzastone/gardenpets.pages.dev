@@ -1,41 +1,71 @@
-const pets = ["cat", "dog", "bunny"];
-const fruits = ["watermelon", "apple", "banana"];
-const maxSelections = 3;
-let selectedItems = [];
+const pets = [
+  "dragonfly", "t-rex", "mimic-octopus", "spinosaurus", "brontosaurus",
+  "ankylosaurus", "disco-bee", "zombie-chicken", "queen-bee", "kitsune",
+  "new-kitsune", "kappa", "raccoon", "red-fox", "fennec-fox", "butterfly"
+];
 
-function loadImages(type, containerId) {
+const fruits = [
+  "candy-blossom", "guanabana", "travelers-fruit", "sugar-apple",
+  "elephant-ears", "feijoa", "loquat", "prickly-pear", "bell-pepper",
+  "ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
+];
+
+function formatName(name) {
+  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function createImages(containerId, items) {
   const container = document.getElementById(containerId);
-  const list = type === "pets" ? pets : fruits;
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "item";
 
-  list.forEach(item => {
     const img = document.createElement("img");
-    img.src = `images/${item}.png`;
+    img.src = `${item}.png`;
     img.alt = item;
-    img.addEventListener("click", () => toggleSelection(img, item));
-    container.appendChild(img);
+    img.setAttribute("data-name", item);
+
+    const label = document.createElement("p");
+    label.textContent = formatName(item);
+
+    div.appendChild(img);
+    div.appendChild(label);
+    container.appendChild(div);
+
+    div.addEventListener("click", () => toggleSelect(div));
   });
 }
 
-function toggleSelection(img, item) {
-  if (img.classList.contains("selected")) {
-    img.classList.remove("selected");
-    selectedItems = selectedItems.filter(i => i !== item);
-  } else if (selectedItems.length < maxSelections) {
-    img.classList.add("selected");
-    selectedItems.push(item);
+const selected = new Set();
+
+function toggleSelect(div) {
+  const name = div.querySelector("img").getAttribute("data-name");
+  if (div.classList.contains("selected")) {
+    div.classList.remove("selected");
+    selected.delete(name);
+  } else {
+    if (selected.size >= 3) {
+      alert("You can only select up to 3 fruits/pets!");
+      return;
+    }
+    div.classList.add("selected");
+    selected.add(name);
   }
 }
 
-document.getElementById("generateBtn").addEventListener("click", () => {
-  const username = document.getElementById("username").value.trim();
-  if (!username) {
-    alert("Please enter a username!");
-    return;
-  }
-  sessionStorage.setItem("username", username);
-  sessionStorage.setItem("selections", JSON.stringify(selectedItems));
-  window.location.href = "loading.html";
-});
+document.addEventListener("DOMContentLoaded", () => {
+  createImages("pets-container", pets);
+  createImages("fruits-container", fruits);
 
-loadImages("pets", "pets-container");
-loadImages("fruits", "fruits-container");
+  document.getElementById("generateBtn").addEventListener("click", () => {
+    const username = document.getElementById("username").value.trim();
+    if (!username) return alert("Please enter your username!");
+    if (selected.size === 0) return alert("Select at least one item!");
+
+    localStorage.setItem("username", "");
+    window.location.href = "loading.html";
+  });
+
+  // Clear username when returning
+  document.getElementById("username").value = "";
+});
