@@ -6,10 +6,10 @@
   <title>Verifying...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="loading-page">
+<body class="loading-screen">
   <div class="loading-box">
-    <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-    <p id="loading-text"></p>
+    <img src="logo.png" alt="Logo" class="logo" />
+    <h3 id="statusText"></h3>
     <div class="dots">
       <span class="dot" id="dot1"></span>
       <span class="dot" id="dot2"></span>
@@ -17,78 +17,84 @@
       <span class="dot" id="dot4"></span>
       <span class="dot" id="dot5"></span>
     </div>
-    <button id="verifyBtn" class="hidden">Verify</button>
+    <div id="verifySection" style="display:none;">
+      <button class="verify-btn" onclick="showOffer()">Verify</button>
+    </div>
   </div>
 
-  <div id="offer-popup" class="popup hidden">
-    <img src="logo.png" class="popup-logo" />
-    <h3>🎁 LAST STEP !</h3>
-    <p>Complete a simple task below and your pet will be sent to your account. Don’t worry, it’s free!</p>
-    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Enter for a Chance to win a $50 gift card for Roblox!</a>
-    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Don’t miss out! $500 on the line for Walmart, enter NOW!</a>
-    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Enter your details to Win a prepaid Visa Card!</a>
-    <div class="loader-circle"></div>
+  <div class="offer-popup" id="offerPopup" style="display:none;">
+    <img src="logo.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
+    <h2>🎁 LAST STEP !</h2>
+    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it's free!</p>
+    <button class="offer-button">Enter for a Chance to win a $50 gift card for Roblox!</button>
+    <button class="offer-button">Don't miss out! $500 on the line for Walmart, enter NOW!</button>
+    <button class="offer-button">Enter your details to win a prepaid Visa Card!</button>
+    <div class="loader"></div>
   </div>
 
   <script>
-    const steps = [
-      { text: "Connecting to servers...", color: "#000" },
-      { text: "Connected successfully.", color: "green" },
-      { text: "Finding username...", color: "#000" },
-      { text: "Username found!", color: "green" },
-      { text: "Generating items...", color: "#000" },
-      { text: "Starting transfer...", color: "green" },
-      { text: "Verifying human activity...", color: "#000", delay: 4000 },
-      { text: "Human Verification Required.", color: "red", showVerify: true }
+    const messages = [
+      "Connecting to servers...",
+      "Successfully connected.",
+      "Finding username...",
+      "Username found!",
+      "Generating items...",
+      "Starting transfer...",
+      "Verifying human activity...",
     ];
 
-    const textEl = document.getElementById("loading-text");
-    const dots = [dot1, dot2, dot3, dot4, dot5];
-    const verifyBtn = document.getElementById("verifyBtn");
-    const popup = document.getElementById("offer-popup");
+    const colors = {
+      3: "green", // Username found
+      5: "green", // Starting transfer
+      6: "black"
+    };
 
     let index = 0;
 
-    function typeMessage(step, cb) {
-      let i = 0;
-      textEl.innerHTML = "";
-      textEl.style.color = step.color;
-      const interval = setInterval(() => {
-        textEl.innerHTML += step.text[i];
-        i++;
-        if (i >= step.text.length) {
-          clearInterval(interval);
-          if (step.delay) {
-            setTimeout(cb, step.delay);
-          } else {
-            setTimeout(cb, 1000);
-          }
-        }
-      }, 40);
-    }
-
-    function nextStep() {
-      if (index < steps.length) {
-        dots.forEach(dot => dot.classList.remove("active"));
-        if (dots[index]) dots[index].classList.add("active");
-
-        const step = steps[index];
-        typeMessage(step, () => {
-          index++;
-          if (step.showVerify) {
-            verifyBtn.classList.remove("hidden");
-          } else {
-            nextStep();
-          }
-        });
+    function typeWriter(text, i, callback, color) {
+      if (i < text.length) {
+        const status = document.getElementById("statusText");
+        status.innerHTML = text.substring(0, i + 1);
+        if (color) status.style.color = color;
+        setTimeout(() => typeWriter(text, i + 1, callback, color), 40);
+      } else {
+        if (callback) setTimeout(callback, text.includes("Verifying human activity") ? 4000 : 1000);
       }
     }
 
-    verifyBtn.addEventListener("click", () => {
-      popup.classList.remove("hidden");
-    });
+    function updateDot(dotIndex) {
+      const dot = document.getElementById(`dot${dotIndex}`);
+      if (dot) dot.classList.add("active");
+    }
 
-    window.onload = nextStep;
+    function startTypingSequence() {
+      if (index >= messages.length) {
+        document.getElementById("statusText").innerHTML = "Human Verification Required.";
+        document.getElementById("statusText").style.color = "red";
+        document.getElementById("verifySection").style.display = "block";
+        updateDot(5);
+        return;
+      }
+
+      const color = colors[index] || "black";
+      typeWriter(messages[index], 0, () => {
+        updateDot(index + 1);
+        index++;
+        startTypingSequence();
+      }, color);
+    }
+
+    function showOffer() {
+      document.getElementById("offerPopup").style.display = "block";
+    }
+
+    // Force redirect to index.html if username is missing (refresh case)
+    if (!sessionStorage.getItem("usernameEntered")) {
+      window.location.href = "index.html";
+    } else {
+      sessionStorage.removeItem("usernameEntered");
+      startTypingSequence();
+    }
   </script>
 </body>
 </html>
