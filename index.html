@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Fruit/Pets Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-  <h1>Fruit/Pets Generator</h1>
-  <input type="text" id="username" placeholder="Enter Username" />
-  <button id="generateBtn">Generate!</button>
-  <p class="limit-text">You can only select up to 3 fruits/pets!</p>
+  <div class="logo">
+    <img src="logo.png" alt="Grow A Garden Logo">
+  </div>
 
-  <h2>Pets:</h2>
-  <div class="grid" id="pets-container"></div>
+  <div class="container">
+    <h1>Fruit/Pets Generator</h1>
+    <input type="text" id="username" placeholder="Enter Username">
+    <button onclick="startGeneration()">Generate!</button>
+    <p id="message" class="message"></p>
 
-  <h2>Fruits:</h2>
-  <div class="grid" id="fruits-container"></div>
+    <h3>Pets:</h3>
+    <div class="image-grid" id="pets">
+      <!-- pet images go here -->
+    </div>
+
+    <h3>Fruits:</h3>
+    <div class="image-grid" id="fruits">
+      <!-- fruit images go here -->
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
