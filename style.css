@@ -1,126 +1,167 @@
-body.loading-page {
+body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #a2e5f7, #c6f0d6);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #3a3f58, #a5c6c7);
+  color: #fff;
+  text-align: center;
 }
 
-.loading-box {
-  background: white;
-  padding: 30px 40px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  text-align: center;
-  max-width: 420px;
-  width: 90%;
+.logo-container {
+  margin-top: 20px;
 }
 
 .logo {
   width: 160px;
+}
+
+.container {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.25);
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 15px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.grid img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.grid img.selected {
+  border: 3px solid lime;
+  transform: scale(1.05);
+}
+
+/* Loading Page */
+.loading-body {
+  background: linear-gradient(to bottom, #3a3f58, #a5c6c7);
+  color: white;
+}
+
+.loading-box {
+  background: white;
+  color: black;
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.loading-logo {
+  width: 100px;
   margin-bottom: 20px;
 }
 
-.loading-messages {
+.loading-text {
   font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  min-height: 24px;
+  line-height: 1.5;
+  min-height: 120px;
+}
+
+.verification-box {
+  margin-top: 20px;
+}
+
+.green-dots::before {
+  content: "🟢🟢🟢";
+  display: block;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+#verify-btn {
+  animation: zoomBounce 1s infinite alternate;
+}
+
+@keyframes zoomBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .verify-warning {
   color: red;
   font-weight: bold;
-  margin: 20px 0 10px;
 }
 
-.dots {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  background: #bbb;
-  border-radius: 50%;
-  margin: 0 4px;
-}
-
-.green {
-  background: green;
-}
-
-.verify-button {
-  padding: 12px 26px;
-  font-size: 18px;
-  border: none;
-  background-color: #28a745;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  animation: zoomInOut 1s ease-in-out;
-}
-
-@keyframes zoomInOut {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-  100% { transform: scale(1); }
-}
-
+/* Offer popup */
 .offer-popup {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-inner {
   background: white;
-  padding: 32px;
-  border-radius: 18px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.3);
-  text-align: center;
-  z-index: 9999;
-  max-width: 460px;
-  width: 90%;
-}
-
-.popup-logo {
-  width: 80px;
-  margin-bottom: 16px;
-}
-
-.offer-btn {
-  display: block;
-  margin: 16px auto;
-  padding: 14px;
-  background-color: #10c26f;
   color: black;
-  font-size: 16px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.popup-inner a {
+  display: block;
+  margin: 10px 0;
+  background: #1abc9c;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
   font-weight: bold;
-  border: 2px solid black;
-  border-radius: 10px;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: background 0.2s ease;
 }
 
-.offer-btn:hover {
-  transform: scale(1.05);
+.popup-inner a:hover {
+  background: #159e87;
 }
 
-.loading-spinner {
-  width: 28px;
-  height: 28px;
-  border: 4px solid #ddd;
-  border-top: 4px solid #10c26f;
-  border-radius: 50%;
-  margin: 18px auto 0;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.hidden {
+  display: none;
 }
