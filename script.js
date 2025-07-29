@@ -11,7 +11,9 @@ const fruits = [
 ];
 
 function formatName(name) {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function createImages(containerId, items) {
@@ -62,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    localStorage.setItem("username", "");
+    sessionStorage.setItem("usernameEntered", "true");
     window.location.href = "loading.html";
   });
 
-  // Clear username when returning
+  // Reset username input on page load
   document.getElementById("username").value = "";
 });
