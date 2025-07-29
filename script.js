@@ -64,8 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    const selection = Array.from(selected).join(",");
-    const url = `https://ogads.com/?username=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
-    window.location.href = url;
+    const btn = document.getElementById("generateBtn");
+    btn.textContent = "Generating items...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+      const selection = Array.from(selected).join(",");
+      const url = `https://your-cpagrip-offer-link.com/?user=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
+      window.location.href = url;
+    }, 1500);
   });
 });
