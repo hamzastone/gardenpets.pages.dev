@@ -62,10 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    localStorage.setItem("username", "");
+    sessionStorage.setItem("usernameEntered", "true");
     window.location.href = "loading.html";
   });
 
-  // Clear username when returning
   document.getElementById("username").value = "";
 });
