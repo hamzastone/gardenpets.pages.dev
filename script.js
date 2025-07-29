@@ -11,7 +11,9 @@ const fruits = [
 ];
 
 function formatName(name) {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function createImages(containerId, items) {
@@ -19,15 +21,19 @@ function createImages(containerId, items) {
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "item";
+
     const img = document.createElement("img");
     img.src = `${item}.png`;
     img.alt = item;
     img.setAttribute("data-name", item);
+
     const label = document.createElement("p");
     label.textContent = formatName(item);
+
     div.appendChild(img);
     div.appendChild(label);
     container.appendChild(div);
+
     div.addEventListener("click", () => toggleSelect(div));
   });
 }
@@ -54,15 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
   createImages("fruits-container", fruits);
 
   document.getElementById("generateBtn").addEventListener("click", () => {
-    const usernameField = document.getElementById("username");
-    const username = usernameField.value.trim();
+    const username = document.getElementById("username").value.trim();
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    // Clear field before redirect
-    usernameField.value = "";
-
-    // Proceed to loading screen
+    sessionStorage.setItem("usernameEntered", "true");
     window.location.href = "loading.html";
   });
+
+  // Reset username input on page load
+  document.getElementById("username").value = "";
 });
