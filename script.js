@@ -1,33 +1,50 @@
-const pets = [
-"dragonfly", "t-rex", "mimic-octopus", "spinosaurus", "brontosaurus",
-"ankylosaurus", "disco-bee", "zombie-chicken", "queen-bee", "kitsune",
-"new-kitsune", "kappa", "raccoon", "red-fox", "fennec-fox", "butterfly"
-];
+document.addEventListener("DOMContentLoaded", () => {
+  const messages = [
+    "Connecting to servers...",
+    "Fetching username...",
+    "Username found!",
+    "Injecting fruits/pets...",
+    "Finalizing injection...",
+    "Verifying human activity...",
+    "Human Verification Required."
+  ];
 
-const fruits = [
-"candy-blossom", "guanabana", "travelers-fruit", "sugar-apple",
-"elephant-ears", "feijoa", "loquat", "prickly-pear", "bell-pepper",
-"ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
-];
+  const container = document.getElementById("loadingMessages");
+  let index = 0;
 
-function formatName(name) {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  return name
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
+  function typeMessage(text, callback) {
+    container.innerHTML = "";
+    let i = 0;
+    const typer = setInterval(() => {
+      container.innerHTML += text.charAt(i);
+      i++;
+      if (i === text.length) {
+        clearInterval(typer);
+        setTimeout(callback, 800);
+      }
+    }, 35);
+  }
 
-function createImages(containerId, items) {
-@@ -62,10 +64,10 @@
-if (!username) return alert("Please enter your username!");
-if (selected.size === 0) return alert("Select at least one item!");
+  function showMessages() {
+    if (index < messages.length) {
+      const msg = messages[index];
+      if (msg === "Username found!") {
+        container.style.color = "green";
+      } else if (msg === "Human Verification Required.") {
+        container.style.color = "red";
+      } else {
+        container.style.color = "#000";
+      }
+      typeMessage(msg, () => {
+        index++;
+        showMessages();
+      });
+    }
+  }
 
-    localStorage.setItem("username", "");
-    sessionStorage.setItem("usernameEntered", "true");
-window.location.href = "loading.html";
-});
+  showMessages();
 
-  // Clear username when returning
-  // Reset username input on page load
-document.getElementById("username").value = "";
+  document.getElementById("verifyBtn").addEventListener("click", () => {
+    document.getElementById("offerPopup").style.display = "block";
+  });
 });
