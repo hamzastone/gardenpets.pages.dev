@@ -62,9 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    // Save selections for optional later use
-    localStorage.setItem("username", username);
-    localStorage.setItem("items", Array.from(selected).join(","));
+    sessionStorage.setItem("username", username);
+    const selection = Array.from(selected).join(",");
+    sessionStorage.setItem("selection", selection);
     window.location.href = "loading.html";
   });
+
+  // Clear username if returning back
+  sessionStorage.removeItem("username");
 });
