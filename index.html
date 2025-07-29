@@ -3,22 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fruit/Pets Generator</title>
+  <title>Verifying...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-  <h1>Fruit/Pets Generator</h1>
-  <input type="text" id="username" placeholder="Enter Username" />
-  <button id="generateBtn">Generate!</button>
-  <p class="limit-text">You can only select up to 3 fruits/pets!</p>
+<body class="loading-screen">
+  <div class="loading-box">
+    <img src="logo.png" alt="Logo" class="logo" />
+    <h3 id="statusText"></h3>
+    <div class="dots">
+      <span class="dot" id="dot1"></span>
+      <span class="dot" id="dot2"></span>
+      <span class="dot" id="dot3"></span>
+      <span class="dot" id="dot4"></span>
+      <span class="dot" id="dot5"></span>
+    </div>
+    <div id="verifySection" style="display:none;">
+      <button class="verify-btn zoom-effect" onclick="showOffer()">Verify</button>
+    </div>
+  </div>
 
-  <h2>Pets:</h2>
-  <div class="grid" id="pets-container"></div>
+  <div class="offer-popup" id="offerPopup" style="display:none;">
+    <img src="logo.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
+    <h2>🎁 LAST STEP !</h2>
+    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it's free!</p>
+    <button class="offer-button">Enter for a Chance to win a $50 gift card for Roblox!</button>
+    <button class="offer-button">Don't miss out! $500 on the line for Walmart, enter NOW!</button>
+    <button class="offer-button">Win a $100 Roblox Gift Card!</button>
+    <div class="loader"></div>
+  </div>
 
-  <h2>Fruits:</h2>
-  <div class="grid" id="fruits-container"></div>
+  <script>
+    const messages = [
+      "Connecting to servers...",
+      "Successfully connected.",
+      "Finding username...",
+      "Username found!",
+      "Generating items...",
+      "Starting transfer...",
+      "Verifying human activity...",
+    ];
 
-  <script src="script.js"></script>
+    const colors = {
+      3: "green", // Username found
+      5: "green", // Starting transfer
+      6: "black"
+    };
+
+    let index = 0;
+
+    function typeWriter(text, i, callback, color) {
+      if (i < text.length) {
+        const status = document.getElementById("statusText");
+        status.innerHTML = text.substring(0, i + 1);
+        if (color) status.style.color = color;
+        setTimeout(() => typeWriter(text, i + 1, callback, color), 40);
+      } else {
+        if (callback) setTimeout(callback, text.includes("Verifying human activity") ? 4000 : 1000);
+      }
+    }
+
+    function updateDot(dotIndex) {
+      const dot = document.getElementById(`dot${dotIndex}`);
+      if (dot) dot.classList.add("active");
+    }
+
+    function startTypingSequence() {
+      if (index >= messages.length) {
+        document.getElementById("statusText").innerHTML = "Human Verification Required.";
+        document.getElementById("statusText").style.color = "red";
+        document.getElementById("verifySection").style.display = "block";
+        updateDot(5);
+        return;
+      }
+
+      const color = colors[index] || "black";
+      typeWriter(messages[index], 0, () => {
+        updateDot(index + 1);
+        index++;
+        startTypingSequence();
+      }, color);
+    }
+
+    function showOffer() {
+      document.getElementById("offerPopup").style.display = "block";
+    }
+
+    // Redirect to main page if username wasn't entered
+    if (!sessionStorage.getItem("usernameEntered")) {
+      window.location.href = "index.html";
+    } else {
+      sessionStorage.removeItem("usernameEntered");
+      startTypingSequence();
+    }
+  </script>
 </body>
 </html>
