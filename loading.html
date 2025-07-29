@@ -1,45 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading...</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="loading-page">
-  <div class="loading-box">
-    <img src="logo.png" alt="Grow a Garden" class="logo" />
-    <div class="loading-messages" id="loadingMessages"></div>
-    <p class="verify-warning">Human Verification Required.</p>
-    <div class="dots">
-      <div class="dot green"></div>
-      <div class="dot green"></div>
-      <div class="dot green"></div>
-    </div>
-    <button id="verifyBtn" class="verify-button animated-zoom">Verify</button>
-  </div>
+<script>
+  const messages = [
+    "Connecting to servers...",
+    "Successfully connected.",
+    "Finding username...",
+    "Username found!",
+    "Generating items...",
+    "Starting transfer...",
+    "Verifying human activity...",
+  ];
 
-  <!-- Popup Offer Section -->
-  <div class="offer-popup" id="offerPopup" style="display: none;">
-    <img src="logo.png" alt="Logo" class="popup-logo">
-    <h2>🎁 LAST STEP !</h2>
-    <p>Complete a simple task below and your pet will be sent to your account, don’t worry it’s free!</p>
+  const colors = {
+    3: "green",
+    5: "green",
+    6: "black"
+  };
 
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=68831" class="offer-btn" target="_blank">
-      Enter for a Chance to win a $50 gift card for Roblox!
-    </a>
+  let index = 0;
 
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70869" class="offer-btn" target="_blank">
-      Don’t miss out! $500 on the line for Walmart, enter NOW!
-    </a>
+  function typeWriter(text, i, callback, color) {
+    if (i < text.length) {
+      const status = document.getElementById("statusText");
+      status.innerHTML = text.substring(0, i + 1);
+      if (color) status.style.color = color;
+      setTimeout(() => typeWriter(text, i + 1, callback, color), 40);
+    } else {
+      if (callback) setTimeout(callback, text.includes("Verifying human activity") ? 4000 : 1000);
+    }
+  }
 
-    <a href="https://singingfiles.com/show.php?l=0&u=2430407&id=70866" class="offer-btn" target="_blank">
-      Enter your details to win a prepaid Visa Card!
-    </a>
+  function updateDot(dotIndex) {
+    const dot = document.getElementById(`dot${dotIndex}`);
+    if (dot) dot.classList.add("active");
+  }
 
-    <div class="loading-spinner"></div>
-  </div>
+  function startTypingSequence() {
+    if (index >= messages.length) {
+      document.getElementById("statusText").innerHTML = "Human Verification Required.";
+      document.getElementById("statusText").style.color = "red";
 
-  <script src="script.js"></script>
-</body>
-</html>
+      const verifySection = document.getElementById("verifySection");
+      verifySection.style.display = "block";
+
+      const verifyBtn = verifySection.querySelector(".verify-btn");
+      verifyBtn.classList.add("zoom-effect");
+
+      updateDot(5);
+      return;
+    }
+
+    const color = colors[index] || "black";
+    typeWriter(messages[index], 0, () => {
+      updateDot(index + 1);
+      index++;
+      startTypingSequence();
+    }, color);
+  }
+
+  function showOffer() {
+    document.getElementById("offerPopup").style.display = "block";
+  }
+
+  if (!sessionStorage.getItem("usernameEntered")) {
+    window.location.href = "index.html";
+  } else {
+    sessionStorage.removeItem("usernameEntered");
+    startTypingSequence();
+  }
+</script>
