@@ -10,10 +10,10 @@ const fruits = [
   "ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
 ];
 
+const cpagripOfferURL = "https://yoursubdomain.cpagrip.com/human-verification"; // Replace with your link
+
 function formatName(name) {
-  return name
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
+  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function createImages(containerId, items) {
@@ -59,20 +59,54 @@ document.addEventListener("DOMContentLoaded", () => {
   createImages("pets-container", pets);
   createImages("fruits-container", fruits);
 
-  const generateBtn = document.getElementById("generateBtn");
-
-  generateBtn.addEventListener("click", () => {
+  document.getElementById("generateBtn").addEventListener("click", () => {
     const username = document.getElementById("username").value.trim();
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    generateBtn.disabled = true;
-    generateBtn.textContent = "Generating items...";
-
-    setTimeout(() => {
-      const selection = Array.from(selected).join(",");
-      const cpagripURL = `https://your-cpagrip-link.com/?user=${encodeURIComponent(username)}&items=${encodeURIComponent(selection)}`;
-      window.location.href = cpagripURL;
-    }, 2000); // 2 seconds delay
+    const selection = Array.from(selected).join(",");
+    showLoadingSequence(username, selection);
   });
 });
+
+function showLoadingSequence(username, selection) {
+  const overlay = document.getElementById("loading-overlay");
+  const text = document.getElementById("loading-text");
+  overlay.classList.remove("hidden");
+
+  const steps = [
+    "Connecting to servers...",
+    "Successfully connected.",
+    "Finding username...",
+    `Username found: ${username}`,
+    "Generating items...",
+    "Starting transfer...",
+    "Verifying human...",
+    "❗ Human verification required"
+  ];
+
+  let i = 0;
+  function typeStep() {
+    if (i >= steps.length) {
+      setTimeout(() => {
+        window.location.href = cpagripOfferURL;
+      }, 1500);
+      return;
+    }
+
+    let current = "";
+    let j = 0;
+    const interval = setInterval(() => {
+      current += steps[i][j];
+      text.textContent = current;
+      j++;
+      if (j >= steps[i].length) {
+        clearInterval(interval);
+        i++;
+        setTimeout(typeStep, 900); // Wait before next line
+      }
+    }, 40); // Typing speed
+  }
+
+  typeStep();
+}
