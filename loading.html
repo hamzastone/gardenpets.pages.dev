@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Processing...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verifying...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="loading-container">
+<body class="loading-page">
+  <div class="loading-box">
     <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
-    <p id="loadingText" class="loading-text"></p>
+    <p id="loading-text"></p>
     <div class="dots">
       <span class="dot" id="dot1"></span>
       <span class="dot" id="dot2"></span>
@@ -17,74 +17,78 @@
       <span class="dot" id="dot4"></span>
       <span class="dot" id="dot5"></span>
     </div>
+    <button id="verifyBtn" class="hidden">Verify</button>
   </div>
 
-  <div class="verify-popup" id="verifyPopup" style="display: none;">
+  <div id="offer-popup" class="popup hidden">
+    <img src="logo.png" class="popup-logo" />
     <h3>🎁 LAST STEP !</h3>
-    <p>Complete a simple task below and your pet will be sent to your account — don’t worry, it’s free!</p>
-    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000000" class="offer-button">Enter for a Chance to win a $50 gift card for Roblox!</a>
-    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000001" class="offer-button">Don't miss out! $500 on the line for Walmart, enter NOW!</a>
-    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000002" class="offer-button">Enter your details to Win a prepaid Visa Card!</a>
+    <p>Complete a simple task below and your pet will be sent to your account. Don’t worry, it’s free!</p>
+    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Enter for a Chance to win a $50 gift card for Roblox!</a>
+    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Don’t miss out! $500 on the line for Walmart, enter NOW!</a>
+    <a href="https://your-cpagrip-link.com" target="_blank" class="offer-btn">Enter your details to Win a prepaid Visa Card!</a>
+    <div class="loader-circle"></div>
   </div>
 
   <script>
-    const messages = [
-      { text: "Connecting to servers...", color: "black", delay: 1000 },
-      { text: "Successfully connected.", color: "green", delay: 1000 },
-      { text: "Finding username...", color: "black", delay: 1000 },
-      { text: "Username found!", color: "green", delay: 1000 },
-      { text: "Generating items...", color: "black", delay: 1000 },
-      { text: "Starting transfer...", color: "green", delay: 1000 },
-      { text: "Verifying human activity...", color: "black", delay: 4000 },
-      { text: "Human Verification Required.", color: "red", delay: 0 }
+    const steps = [
+      { text: "Connecting to servers...", color: "#000" },
+      { text: "Connected successfully.", color: "green" },
+      { text: "Finding username...", color: "#000" },
+      { text: "Username found!", color: "green" },
+      { text: "Generating items...", color: "#000" },
+      { text: "Starting transfer...", color: "green" },
+      { text: "Verifying human activity...", color: "#000", delay: 4000 },
+      { text: "Human Verification Required.", color: "red", showVerify: true }
     ];
 
-    const dots = ["dot1", "dot2", "dot3", "dot4", "dot5"];
-    let currentIndex = 0;
-    const textEl = document.getElementById("loadingText");
+    const textEl = document.getElementById("loading-text");
+    const dots = [dot1, dot2, dot3, dot4, dot5];
+    const verifyBtn = document.getElementById("verifyBtn");
+    const popup = document.getElementById("offer-popup");
 
-    function updateDots(index) {
-      dots.forEach((dotId, i) => {
-        document.getElementById(dotId).style.backgroundColor = i <= index ? "#00cc66" : "#ccc";
-      });
-    }
+    let index = 0;
 
-    function typeText(text, color, callback) {
-      textEl.innerHTML = "";
-      textEl.style.color = color;
+    function typeMessage(step, cb) {
       let i = 0;
+      textEl.innerHTML = "";
+      textEl.style.color = step.color;
       const interval = setInterval(() => {
-        if (i < text.length) {
-          textEl.innerHTML += text.charAt(i);
-          i++;
-        } else {
+        textEl.innerHTML += step.text[i];
+        i++;
+        if (i >= step.text.length) {
           clearInterval(interval);
-          if (callback) callback();
+          if (step.delay) {
+            setTimeout(cb, step.delay);
+          } else {
+            setTimeout(cb, 1000);
+          }
         }
       }, 40);
     }
 
     function nextStep() {
-      if (currentIndex < messages.length) {
-        const { text, color, delay } = messages[currentIndex];
-        updateDots(currentIndex);
-        typeText(text, color, () => {
-          setTimeout(() => {
-            currentIndex++;
+      if (index < steps.length) {
+        dots.forEach(dot => dot.classList.remove("active"));
+        if (dots[index]) dots[index].classList.add("active");
+
+        const step = steps[index];
+        typeMessage(step, () => {
+          index++;
+          if (step.showVerify) {
+            verifyBtn.classList.remove("hidden");
+          } else {
             nextStep();
-          }, delay);
+          }
         });
-      } else {
-        document.getElementById("verifyPopup").style.display = "block";
       }
     }
 
-    // Clear username from history if user comes back
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.pathname);
-    }
+    verifyBtn.addEventListener("click", () => {
+      popup.classList.remove("hidden");
+    });
 
-    nextStep();
+    window.onload = nextStep;
   </script>
 </body>
 </html>
