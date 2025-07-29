@@ -1,3 +1,6 @@
+javascript
+Copy
+Edit
 const pets = [
   "dragonfly", "t-rex", "mimic-octopus", "spinosaurus", "brontosaurus",
   "ankylosaurus", "disco-bee", "zombie-chicken", "queen-bee", "kitsune",
@@ -11,7 +14,9 @@ const fruits = [
 ];
 
 function formatName(name) {
-  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function createImages(containerId, items) {
@@ -21,7 +26,7 @@ function createImages(containerId, items) {
     div.className = "item";
 
     const img = document.createElement("img");
-    img.src = `${item}.png`;
+    img.src = ${item}.png;
     img.alt = item;
     img.setAttribute("data-name", item);
 
@@ -62,10 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    localStorage.setItem("username", "");
+    sessionStorage.setItem("usernameEntered", "true");
     window.location.href = "loading.html";
   });
 
-  // Clear username when returning
+  // Reset username input on page load
   document.getElementById("username").value = "";
 });
