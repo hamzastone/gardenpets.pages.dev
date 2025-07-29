@@ -19,19 +19,15 @@ function createImages(containerId, items) {
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "item";
-
     const img = document.createElement("img");
     img.src = `${item}.png`;
     img.alt = item;
     img.setAttribute("data-name", item);
-
     const label = document.createElement("p");
     label.textContent = formatName(item);
-
     div.appendChild(img);
     div.appendChild(label);
     container.appendChild(div);
-
     div.addEventListener("click", () => toggleSelect(div));
   });
 }
@@ -58,16 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
   createImages("fruits-container", fruits);
 
   document.getElementById("generateBtn").addEventListener("click", () => {
-    const username = document.getElementById("username").value.trim();
+    const usernameField = document.getElementById("username");
+    const username = usernameField.value.trim();
     if (!username) return alert("Please enter your username!");
     if (selected.size === 0) return alert("Select at least one item!");
 
-    sessionStorage.setItem("username", username);
-    const selection = Array.from(selected).join(",");
-    sessionStorage.setItem("selection", selection);
+    // Clear field before redirect
+    usernameField.value = "";
+
+    // Proceed to loading screen
     window.location.href = "loading.html";
   });
-
-  // Clear username if returning back
-  sessionStorage.removeItem("username");
 });
