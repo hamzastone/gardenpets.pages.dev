@@ -1,46 +1,33 @@
-const petImages = [
-  "pet1.png", "pet2.png", "pet3.png"
+const pets = [
+"dragonfly", "t-rex", "mimic-octopus", "spinosaurus", "brontosaurus",
+"ankylosaurus", "disco-bee", "zombie-chicken", "queen-bee", "kitsune",
+"new-kitsune", "kappa", "raccoon", "red-fox", "fennec-fox", "butterfly"
 ];
 
-const fruitImages = [
-  "fruit1.png", "fruit2.png", "fruit3.png"
+const fruits = [
+"candy-blossom", "guanabana", "travelers-fruit", "sugar-apple",
+"elephant-ears", "feijoa", "loquat", "prickly-pear", "bell-pepper",
+"ember-lily", "beanstalk", "cacao", "pepper", "mushroom", "grape"
 ];
 
-function createGrid(images, gridId) {
-  const grid = document.getElementById(gridId);
-  images.forEach(src => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.addEventListener("click", () => toggleSelect(img));
-    grid.appendChild(img);
-  });
+function formatName(name) {
+  return name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-function toggleSelect(img) {
-  const selected = document.querySelectorAll(".grid img.selected");
-  if (img.classList.contains("selected")) {
-    img.classList.remove("selected");
-  } else if (selected.length < 3) {
-    img.classList.add("selected");
-  }
-}
+function createImages(containerId, items) {
+@@ -62,10 +64,10 @@
+if (!username) return alert("Please enter your username!");
+if (selected.size === 0) return alert("Select at least one item!");
 
-function generateItems() {
-  const username = document.getElementById("username").value.trim();
-  if (username === "") {
-    alert("Please enter your Roblox username.");
-    return;
-  }
+    localStorage.setItem("username", "");
+    sessionStorage.setItem("usernameEntered", "true");
+window.location.href = "loading.html";
+});
 
-  const selected = document.querySelectorAll(".grid img.selected");
-  if (selected.length !== 3) {
-    alert("Please select exactly 3 fruits or pets.");
-    return;
-  }
-
-  sessionStorage.setItem("username", username);
-  window.location.href = "loading.html";
-}
-
-createGrid(petImages, "pet-grid");
-createGrid(fruitImages, "fruit-grid");
+  // Clear username when returning
+  // Reset username input on page load
+document.getElementById("username").value = "";
+});
